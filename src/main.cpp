@@ -2,16 +2,30 @@
 #include <iostream>
 
 int main() {
-  FactBase facts;
-  facts.set("age", 25);
+    FactBase facts;
+    facts.set("temperature", 35);
 
-  RuleEngine engine;
+    RuleEngine engine;
 
-  Rule rule([](const FactBase &f) { return f.get<int>("age") > 18; },
-            []() { std::cout << "Access granted.\n"; });
+    engine.addRule(Rule{
+        "Cooling Alert", 2,
+        [](const FactBase& f) {
+            return f.get<int>("temperature") > 30;
+        },
+        [](FactBase& f) {
+            std::cout << "Action: Turn on cooling system.\n";
+        }
+    });
 
-  engine.addRule(rule);
-  engine.evaluate(facts);
+    engine.addRule(Rule{
+        "Extreme Heat Warning", 3,
+        [](const FactBase& f) {
+            return f.get<int>("temperature") > 40;
+        },
+        [](FactBase& f) {
+            std::cout << "Action: Send emergency heat warning.\n";
+        }
+    });
 
-  return 0;
+    engine.evaluate(facts);
 }
