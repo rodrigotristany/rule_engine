@@ -1,0 +1,10 @@
+Checks: >
+  clang-analyzer-*,bugprone-*,modernize-*,performance-*,readability-*,
+  cppcoreguidelines-*,misc-*
+
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'
+FormatStyle: file
+CheckOptions:
+  - { key: readability-identifier-naming.VariableCase, value: camelCase }
+  - { key: modernize-use-nullptr.NullMacros, value: 'NULL' }
